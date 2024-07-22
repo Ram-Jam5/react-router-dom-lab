@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
     boxholder: "",
     boxSize: "Small" 
 }
 const MailboxForm = ({ addBox }) => {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState(initialState);
     
     const handleChange = ({ target }) => {
@@ -13,7 +15,8 @@ const MailboxForm = ({ addBox }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         addBox(formData);
-        setFormData(initialState)
+        setFormData(initialState);
+        navigate('/mailboxes')
     }
 
     return (

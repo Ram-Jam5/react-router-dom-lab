@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const initialState = {
-    boxholder: "",
-    boxSize: "Small" 
-}
-const MailboxForm = ({ addBox }) => {
+
+const MailboxForm = ({addBox}) => {
+    const [formData, setFormData] = useState({
+        boxholder: '',
+        boxSize: 'Small',
+    });
+   
     const navigate = useNavigate()
-    const [formData, setFormData] = useState(initialState);
     
     const handleChange = ({ target }) => {
         setFormData({ ...formData, [target.name]: target.value })
@@ -15,23 +16,28 @@ const MailboxForm = ({ addBox }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         addBox(formData);
-        setFormData(initialState);
+        setFormData();
         navigate('/mailboxes')
     }
 
     return (
         <main>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name of Boxholder:</label>
+                <label htmlFor="boxholder">Name of Boxholder:</label>
                 <input
+                    id="boxholder"
+                    name="boxholder"
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    value={formData.boxholder}
                     onChange={handleChange}
                 />
                 <label htmlFor="boxsize">Box Size:</label> 
-                <select name="boxsize">
+                <select 
+                    name="boxsize"
+                    id="boxsize"
+                    value={formData.boxSize}
+                    onChange={handleChange}
+                >
                     <option value="Small">Small</option>    
                     <option value="Medium">Medium</option>  
                     <option value="Large">Large</option>  
